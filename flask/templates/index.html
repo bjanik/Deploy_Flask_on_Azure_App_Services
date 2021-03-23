@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anecdotes</title>
+</head>
+<body>
+    <form action="{{ url_for('submit') }}" method='POST'>
+        <input type="text" name="email" placeholder="Email" id="email" required>
+        <button type="submit" value="Submit">Submit</button>
+        <label for="time">Get anecdotes from the last:</label>
+        <select name="time" id='time'>
+            <option value="21600">6 hours</option>
+            <option value="86400">1 day</option>
+            <option value="604800">1 week</option>
+            <option value="2419200">1 month</option>
+        </select>
+    </form>
+</body>
+</html>
