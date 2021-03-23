@@ -24,9 +24,11 @@ class DB:
     def __exit__(self, exc_type, exc_val, traceback):
         self._dbcon.close()
 
-    def get_last_anecdotes(self, limit=5):
-        query = "SELECT anecdotes FROM TRIVIA ORDER BY ID DESC LIMIT %s"
-        self._cursor.execute(query, [limit])
+    def get_last_anecdotes(self, time_interval):
+        now = round(time.time())
+        valid_interval = now - time_interval
+        query = "SELECT anecdotes FROM TRIVIA WHERE recording_time >= %s"
+        self._cursor.execute(query, [valid_interval])
         anecdotes = self._cursor.fetchall()
         anecdotes = [a[0] for a in anecdotes]
         return anecdotes

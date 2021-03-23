@@ -9,6 +9,7 @@ from flask import (
 )
 
 from db import DB
+from mail_sender import send_email
 
 app = Flask(__name__)
 
@@ -22,12 +23,18 @@ def home():
 def submit():
     email_regex = r'^[\w.]+@[\w]+.([\w]{2,})$'
     email = request.form.get('email')
+    timing = int(request.form.get('time'))
     prog = re.compile(email_regex)
     if not prog.match(email):
         return "Bad email"
-    with DB() as db:
-        anecdotes = db.get_last_anecdotes()
-    return render_template("feedback.html", anecdotes=anecdotes)
+    message = "Email was sucessfully send!"
+    try:
+        with DB() as db:
+            anecdotes = db.get_last_anecdotes(timing)
+            send_email(email, anecdotes)
+    except Exception as e:
+        message = e
+    return render_template("feedback.html", message=message)
 
 @app.route("/feedback")
 def feedback():
