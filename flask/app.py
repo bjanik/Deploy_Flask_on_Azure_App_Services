@@ -8,8 +8,8 @@ from flask import (
     request
 )
 
-from db import DB
-from mail_sender import send_email
+from .db import DB
+from .mail_sender import send_email
 
 app = Flask(__name__)
 
@@ -23,6 +23,7 @@ def home():
 def submit():
     email_regex = r'^[\w.]+@[\w]+.([\w]{2,})$'
     email = request.form.get('email')
+    
     timing = int(request.form.get('time'))
     prog = re.compile(email_regex)
     if not prog.match(email):

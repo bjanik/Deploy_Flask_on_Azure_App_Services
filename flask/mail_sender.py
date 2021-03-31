@@ -15,9 +15,7 @@ def send_email(email_rcv, anecdotes):
     msg['From'] = EMAIL_SRC
     msg['To'] = email_rcv
 
-    message = ''
-    for anecdote in anecdotes:
-        message += anecdote + "\n"
+    message = '\n'.join(anecdotes)
 
     s = smtplib.SMTP_SSL(host='smtp.gmail.com', port=465)
     s.login(user=EMAIL_SRC, password=PASSWORD)
