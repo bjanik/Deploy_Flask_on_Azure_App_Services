@@ -1,9 +1,9 @@
 import os
-import smtplib
 import ssl
 
 from email.mime.text import MIMEText
 from dotenv import load_dotenv
+from smtplib import SMTP_SSL
 
 load_dotenv()
 EMAIL_SRC = os.getenv('EMAIL')
@@ -17,7 +17,7 @@ def send_email(email_rcv, anecdotes):
 
     message = '\n'.join(anecdotes)
 
-    s = smtplib.SMTP_SSL(host='smtp.gmail.com', port=465)
+    s = SMTP_SSL(host='smtp.gmail.com', port=465)
     s.login(user=EMAIL_SRC, password=PASSWORD)
     s.sendmail(EMAIL_SRC, email_rcv, message.encode())
     s.quit()
